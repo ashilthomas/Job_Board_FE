@@ -6,7 +6,7 @@ function AdminCon() {
     <div className='w-full bg-white'>
         <h1>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptates quas iure sed nihil non nam ipsum doloremque cumque eos fugit est qui veniam rerum veritatis deleniti, ad repudiandae adipisci optio!</h1>
 
-       
+        jsCookie.remove("token")
     </div>
   )
 }

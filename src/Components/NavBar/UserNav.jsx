@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DropDownBtn } from "../DropDownBtn/DropDownBtn";
 import { useDispatch } from "react-redux";
 import { setLogOut } from "@/Redux/userData";
+import jsCookie from "js-cookie"
 
 const UserNav = ({ openLogin, openSignup }) => {
+  const navigate =useNavigate()
   const dispatch =useDispatch()
   const [isOpen, setIsOpen] = useState(false);
 
   const LogOut =()=>{
     dispatch(setLogOut())
+    jsCookie.remove("token")
+    navigate("/")
 
 
 
