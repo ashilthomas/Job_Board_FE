@@ -1,7 +1,6 @@
 import React from "react";
 import useFetch from "@/CoustomHooks/useFetch";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate
 import {
   Select,
   SelectContent,
