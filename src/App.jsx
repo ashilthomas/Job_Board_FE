@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./Layouts/MainLayout";
 import LandingPage from "./Pages/LandingPage";
-import "./app.css";
+import "./App.css";
 import { ThemeProvider } from "./Components/theame";
 import LoginModal from "./Pages/LoginModel";
 import JobsPage from "./Pages/JobsPage";
