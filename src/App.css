@@ -1,0 +1,122 @@
+.main-page {
+ 
+  margin: auto;
+  min-height: 100vh; /* Allow the content to grow */
+  position: relative;
+  overflow: hidden; /* Adjust this if your content needs to show beyond the viewport */
+}
+
+.main-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 12%;
+  height: 100%;
+  width: 100%;
+  z-index: 0; /* Push it behind the content */
+  background-image: radial-gradient(closest-side, rgba(166, 24, 248, 0.21), rgba(255, 200, 30, 0));
+  pointer-events: none; /* Ensure it doesn’t block interactions */
+}
+
+.navbar {
+
+  position: relative;
+
+}
+
+.navbar::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px; /* Thickness of the line */
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%, /* Fade-in effect starts here */
+    rgba(255, 255, 255, 0.3) 50%, /* Subtle white center */
+    rgba(255, 255, 255, 0) 100% /* Fade-out effect ends here */
+  );
+}
+/* LogoCrsl.css */
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scroll {
+  display: flex;
+  animation: scroll 20s linear infinite;
+ 
+}
+
+
+
+/* .logos {
+  overflow: hidden;
+  padding: 30px 0px;
+  white-space: nowrap;
+  position: relative;
+}
+
+.logos:before,
+.logos:after {
+  position: absolute;
+  top: 0;
+  content: '';
+  width: 250px;
+  height: 100%;
+  z-index: 2;
+}
+
+.logos:before {
+  left: 0;
+  background: linear-gradient(to left, rgba(255, 255, 255, 0), rgb(255, 255, 255));
+}
+
+.logos:after {
+  right: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255));
+}
+
+.logo_items {
+  display: inline-block;
+  animation: 35s slides infinite linear;
+}
+
+.logos:hover .logo_items {
+  animation-play-state: paused;
+}
+
+.logo_items img {
+  height: 100px;
+  margin-right: 15px; /* Add spacing between logos */
+ */
+footer{
+  position: relative;
+}
+.copyright{
+  position: relative;
+}
+.footer-t::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px; /* Thickness of the line */
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%, /* Fade-in effect starts here */
+    rgba(255, 255, 255, 0.3) 50%, /* Subtle white center */
+    rgba(255, 255, 255, 0) 100% /* Fade-out effect ends here */
+  );
+}
+
+footer ul li a{
+  color: rgb(188, 187, 187);
+}
