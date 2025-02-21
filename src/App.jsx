@@ -4,7 +4,7 @@ import MainLayout from "./Layouts/MainLayout";
 import LandingPage from "./Pages/LandingPage";
 import "./App.css";
 import { ThemeProvider } from "./Components/theame";
-import LoginModal from "./Pages/LoginModel";
+import LoginModal from "./Pages/LoginModal";
 import JobsPage from "./Pages/JobsPage";
 
 import AdminLayout from "./Layouts/AdminLayout";

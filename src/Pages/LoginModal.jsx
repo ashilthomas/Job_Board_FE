@@ -22,7 +22,7 @@ const signupSchema = yup.object().shape({
   password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
 });
 
-function AuthModal({ closeModal, initialView = "login" }) {
+function LoginModel({ closeModal, initialView = "login" }) {
 
   
   const [view, setView] = useState(initialView);
@@ -171,4 +171,4 @@ function AuthModal({ closeModal, initialView = "login" }) {
   );
 }
 
-export default AuthModal;
+export default LoginModel;
