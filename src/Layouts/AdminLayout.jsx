@@ -1,5 +1,5 @@
 import AdminNav from "@/Components/NavBar/AdminNav";
-import AdminSidebar from "@/Components/Sidebar/AdminSidebar";
+import AdminSidebar from "@/Components/Sidebar/AdminSideBar";
 import React from "react";
 import { Outlet } from "react-router-dom";
 
