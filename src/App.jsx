@@ -15,7 +15,7 @@ import { Toaster } from "./Components/ui/toaster";
 import MyJobs from "./Pages/MyJobs";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
-import PostJobVerify from "./Pages/postJobVerify";
+import PostJobVerify from "./Pages/PostJobVerify";
 import persistStore from "redux-persist/es/persistStore";
 import { PersistGate } from "redux-persist/integration/react";
 import RecommendedJobs from "./Pages/RecommendedJobs";
