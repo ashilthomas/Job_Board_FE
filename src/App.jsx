@@ -9,7 +9,7 @@ import JobsPage from "./Pages/JobsPage";
 
 import AdminLayout from "./Layouts/AdminLayout";
 import PostJob from "./Pages/PostJob";
-import AdminAllJobs from "./Pages/adminAllJobs.jsx";
+import AdminAllJobs from "./Pages/AdminAllJobs";
 import JobDetails from "./Pages/JobDetails";
 import { Toaster } from "./Components/ui/toaster";
 import MyJobs from "./Pages/MyJobs";
