@@ -2,14 +2,13 @@
 
 import * as React from "react";
 
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import {   DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem, } from "../ui/dropdown-menu";
 
 export function DropDownBtn({logOut}) {
     const {  role } = useSelector((state) => state.user);
