@@ -8,7 +8,7 @@ function JobDetails() {
     const { id } = useParams();
 
     
-    const { data, loading, error, refetch } = useFetch(`job/${id}`, "POST");
+    const { data, loading } = useFetch(`job/${id}`, "POST");
 
     
     if(loading){

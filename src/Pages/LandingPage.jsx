@@ -3,7 +3,7 @@ import React from "react";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
 import LogoCrsl from "@/Components/LogoCrsl/LogoCrsl";
-import CountAnm from "@/Components/CountAnm/CountAnm";
+
 
 function LandingPage() {
   const jobCategories = [

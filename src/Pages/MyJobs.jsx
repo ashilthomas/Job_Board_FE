@@ -3,7 +3,7 @@ import useFetch from '@/CoustomHooks/useFetch';
 import React from 'react'
 
 function MyJobs() {
-    const { data, loading, error, refetch } = useFetch("application/myjobs");
+    const { data } = useFetch("application/myjobs");
      console.log(data);
      
 
