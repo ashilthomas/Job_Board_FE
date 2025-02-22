@@ -5,17 +5,16 @@ import { Input } from '@/Components/ui/input';
 
 
 import instance from '@/Utils/Axios';
-import {
-  Select,
+
+import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/Components/ui/card';
+import { Skeleton } from '@/Components/ui/skeleton';
+import {  Select,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectLabel,
   SelectTrigger,
-  SelectValue,
-} from "@/components/ui/Select";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/Components/ui/card';
-import { Skeleton } from '@/Components/ui/skeleton';
+  SelectValue, } from '@/Components/ui/select';
 
 function JobsPage() {
   const [inputValue, setInputValue] = useState('');
