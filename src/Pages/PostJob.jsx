@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FormInput from "@/Components/Input/FormInput";
 import { jobSchema } from "@/Utils/JobSchema";
 import axios from "axios";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/Select";
 
 function PostJob() {
     const {
