@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./Layouts/MainLayout";
 import LandingPage from "./Pages/LandingPage";
@@ -47,8 +47,8 @@ function App() {
     },
     {
       element: (
-      
-          <MainLayout />
+      <UserRoute>
+          <MainLayout /></UserRoute>
        
       ), // Wrap only protected routes
       children: [

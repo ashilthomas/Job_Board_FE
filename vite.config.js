@@ -4,6 +4,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react()],
+  logLevel: "error", 
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"), // ✅ Ensure alias is correct
