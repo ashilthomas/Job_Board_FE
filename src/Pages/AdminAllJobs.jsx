@@ -1,14 +1,13 @@
 import React from "react";
 import useFetch from "@/CoustomHooks/useFetch";
 import { useSelector } from "react-redux";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import instance from "@/Utils/Axios";
+import {   Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue, } from "@/Components/ui/select";
 
 function AdminAllJobs() {
   const { role } = useSelector((state) => state.user);
