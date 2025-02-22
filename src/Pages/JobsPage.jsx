@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
+
 import { Skeleton } from '@/components/ui/skeleton';
 import instance from '@/Utils/Axios';
 import {
@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/Components/ui/card';
 
 function JobsPage() {
   const [inputValue, setInputValue] = useState('');

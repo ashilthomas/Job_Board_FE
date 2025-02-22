@@ -1,8 +1,9 @@
 import useFetch from '@/CoustomHooks/useFetch';
 import React from 'react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/components/ui/card';
+
 import { Link } from 'react-router-dom';
 import { Button } from '@/Components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/Components/ui/card';
 
 function RecommendedJobs() {
   const { data, loading, error, refetch } = useFetch('recommend');
