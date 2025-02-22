@@ -1,5 +1,6 @@
 import AdminNav from "@/Components/NavBar/AdminNav";
-import AdminSidebar from "@/Components/Sidebar/AdminSideBar";
+import AdminSideBar from "@/Components/SideBar/AdminSideBar";
+
 import React from "react";
 import { Outlet } from "react-router-dom";
 
@@ -8,7 +9,7 @@ function AdminLayout() {
     <div className="container main-page mx-auto">
       <AdminNav />
       <div className="flex">
-        <AdminSidebar />
+        <AdminSideBar />
         <div className="flex-1">
           <Outlet />
         </div>
