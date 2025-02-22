@@ -1,16 +1,16 @@
-import useFetch from "@/CoustomHooks/useFetch";
+
 import React from "react";
 import { useParams } from "react-router-dom";
-import instance from "@/Utils/Axios"; // Import Axios instance
+ // Import Axios instance
+import {  Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue, } from "@/Components/ui/select";
+import useFetch from "@/CoustomHooks/useFetch";
+import instance from "@/Utils/Axios";
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/Select";
 
 function SeekerApplied() {
   const { id } = useParams();

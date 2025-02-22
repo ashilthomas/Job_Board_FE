@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import LoginModel from "../../Pages/LoginModal"
+
 import { useToast } from "@/hooks/use-toast";
 
 import instance from "../Axios";
 import { useNavigate } from "react-router-dom";
+import LoginModel from "@/Pages/LoginModal";
 
 const UserRoute = ({ children }) => {
   const { token } = useSelector((state) => state.user);
