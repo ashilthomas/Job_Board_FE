@@ -1,21 +1,24 @@
-import store from "@/Redux/store";
+import store from "@/Redux/store"; // Ensure this import path is correct
 import axios from "axios";
- // Import the Redux store
 
 // Create Axios instance
 const instance = axios.create({
-    baseURL: "http://localhost:4000/api/v1/",
-    withCredentials: true, // ✅ Ensures cookies are sent with requests
+    baseURL: "https://job-board-be-21s5.onrender.com/api/v1/", // Ensure API is up
+    withCredentials: true, // Ensures cookies are sent
 });
 
-// ✅ Automatically attach token to every request
+// Attach token automatically to every request
 instance.interceptors.request.use(
     (config) => {
-        const state = store.getState(); // ✅ Get Redux state directly
-        const token = state?.user?.token; // ✅ Retrieve token safely
-        
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`; 
+        try {
+            const state = store.getState(); // Get Redux state
+            const token = state?.user?.token; // Retrieve token safely
+
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+        } catch (error) {
+            console.error("Error retrieving token from Redux:", error);
         }
         return config;
     },
@@ -23,5 +26,3 @@ instance.interceptors.request.use(
 );
 
 export default instance;
-
-

@@ -4,48 +4,52 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import FormInput from '@/Components/Input/FormInput';
 import instance from '@/Utils/Axios';
-import { useToast } from '@/hooks/use-toast'; // Ensure this hook is correctly implemented
-import { setUser } from '@/Redux/userData';
+import { useToast } from '@/hooks/use-toast'; 
+
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { updateUserRole } from '@/Redux/userData';
 
-// Define the validation schema using Yup
+// Define validation schema using Yup
 const schema = yup.object().shape({
     companyName: yup.string().required('Company Name is required'),
     companyDetails: yup.string().required('Company Details are required'),
 });
 
 function PostJobVerify() {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { toast } = useToast();
+    
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
 
     const onSubmit = async (data) => {
         try {
-            const response = await instance.put('auth/updateEmploye', data);
-            console.log(response.data);
+            const response = await instance.put('/auth/updateEmploye', data);
+            console.log("Response Status:", response.status);
+            console.log("Response Data:", response.data);
             
-            if(response.data.success){
-                dispatch(setUser(response.data.user))
+            if (response.data.success) {
+                dispatch(updateUserRole({ role: response.data.user.role }))
                 toast({
                     title: "Success!",
                     description: response.data.message,
-                    status: "success", // Ensure your useToast hook handles different statuses
-                })
-
-            }else{
+                    status: "success",
+                });
+                navigate("/admin");
+            } else {
                 toast({
-                    title: "Success!",
+                    title: "Error!",
                     description: response.data.message,
-                    status: "success", // Ensure your useToast hook handles different statuses
-                })
-
+                    status: "error",
+                });
             }
-          navigate("/admin")
         } catch (error) {
+            console.error("Error Updating Profile:", error);
+            
+            // Handle different error cases
             const errorMessage = error.response?.data?.message || 'An error occurred while updating the profile.';
             toast({
                 title: "Error",

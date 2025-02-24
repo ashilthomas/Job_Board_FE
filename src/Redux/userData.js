@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  username: "",
+  name: "",
   role: "",
   email: "",
+  token:""
 };
 
 const userData = createSlice({
@@ -11,13 +12,16 @@ const userData = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.username = action.payload.user.name; // Use correct key
+      state.name = action.payload.user.name; 
       state.email = action.payload.user.email;
       state.role = action.payload.user.role;
       state.token = action.payload.token
     },
+    updateUserRole: (state, action) => {
+        state.role = action.payload.role; // Only updating role
+      },
     setLogOut:(state)=>{
-        state.username = ""
+        state.name = ""
       state.email =""
       state.role =""
       state.token =''
@@ -27,7 +31,7 @@ const userData = createSlice({
 });
 
 // Export actions
-export const { setUser,setLogOut } = userData.actions; // Use correct action name
+export const { setUser,setLogOut,updateUserRole } = userData.actions; // Use correct action name
 
 // Export reducer
 export default userData.reducer;

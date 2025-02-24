@@ -15,6 +15,8 @@ function JobDetails() {
         return <h2>Loading...</h2>
     }
 
+    console.log(data.job);
+    
     
     
     
@@ -38,9 +40,13 @@ function JobDetails() {
     <div className="mt-4">
       <strong>Skills Required:</strong>
       <ul className="list-disc list-inside text-slate-300 mt-2">
-    {data?.job.skillsRequired.map((skill, index) => (
-      <li key={index}>{skill}</li>
-    ))}
+    {data?.job?.skillsRequired?.length > 0 ? (
+      JSON.parse(data.job.skillsRequired[0])?.map((skill, index) => (
+        <li key={index}>{skill}</li>
+      ))
+    ) : (
+      <li>No skills listed</li>
+    )}
   </ul>
     </div>
     <p className="text-slate-300 mt-4">

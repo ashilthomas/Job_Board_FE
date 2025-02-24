@@ -6,6 +6,7 @@ import FormInput from "@/Components/Input/FormInput";
 import { jobSchema } from "@/Utils/JobSchema";
 import axios from "axios";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
+import instance from "@/Utils/Axios";
 
 
 function PostJob() {
@@ -48,7 +49,7 @@ function PostJob() {
                 formData.append("image", data.image[0]); // Append the image file
             }
 
-            const response = await axios.post("http://localhost:4000/api/v1/job", formData, {
+            const response = await instance.post("job", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },withCredentials:true
