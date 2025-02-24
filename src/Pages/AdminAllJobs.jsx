@@ -8,6 +8,7 @@ import {   Select,
     SelectItem,
     SelectTrigger,
     SelectValue, } from "@/Components/ui/select";
+import { Link } from "react-router-dom";
 
 function AdminAllJobs() {
   const { role } = useSelector((state) => state.user);
@@ -43,7 +44,9 @@ function AdminAllJobs() {
       {data?.empJobs?.length === 0 ? (
         <h2 className="text-center text-gray-500 mt-10">No jobs found.</h2>
       ) : (
+      
         data?.empJobs?.map((job) => (
+            <Link to={`/seekerapplyedjobs/${job._id}`}>
           <div key={job._id} className="border border-slate-700 rounded-sm m-10">
             <h2 className="px-10 pt-5 text-2xl flex items-center gap-2">
               {job.title}
@@ -73,6 +76,8 @@ function AdminAllJobs() {
               </span>
             </div>
           </div>
+          </Link>
+      
         ))
       )}
     </div>
