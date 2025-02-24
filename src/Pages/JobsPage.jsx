@@ -28,7 +28,16 @@ function JobsPage() {
     location: ''
   });
 
-  console.log(jobs);
+  const handleClearFilters = () => {
+    setFilters({
+      jobType: '',
+      experienceLevel: '',
+      location: ''
+    });
+    setInputValue(''); // Clear search input
+    setCurrentPage(1); // Reset to first page
+    fetchJobs(); // Refetch jobs without filters
+  };
   
 
   // Fetch jobs from the API
@@ -180,6 +189,9 @@ function JobsPage() {
               </SelectGroup>
             </SelectContent>
           </Select>
+        </div>
+        <div>
+          <button className='border text-center px-5 py-2 rounded-md bg-primary text-primary-foreground' onClick={handleClearFilters}>Clear</button>
         </div>
       </div>
 
