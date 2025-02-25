@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { DropDownBtn } from "../DropDownBtn/DropDownBtn";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setLogOut } from "@/Redux/userData";
 import jsCookie from "js-cookie"
 
@@ -9,6 +9,9 @@ const UserNav = ({ openLogin, openSignup }) => {
   const navigate =useNavigate()
   const dispatch =useDispatch()
   const [isOpen, setIsOpen] = useState(false);
+  const { token } = useSelector((state) => state.user);
+  console.log(token);
+  
 
   const LogOut =()=>{
     dispatch(setLogOut())
@@ -77,14 +80,24 @@ const UserNav = ({ openLogin, openSignup }) => {
 
         {/* Get Started Button */}
         <div className="flex gap-3 items-center">
+        {!token && (
+  <>
+    <span 
+      onClick={() => openLogin("login")} 
+      className="hidden md:block border-b border-slate-500 cursor-pointer text-white px-4 pb-1"
+    >
+      Login
+    </span>
+    <button 
+      onClick={() => openSignup("signup")} 
+      className="hidden md:block bg-[rgba(25,17,51,0.5)] border-2 border-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-2xl"
+    >
+      Signup
+    </button>
+  </>
+)}
 
         
-        <span onClick={()=>openLogin("login")} className="hidden md:block border-b border-slate-500 cursor-pointer text-white px-4 pb-1 ">
-          Login
-        </span>
-        <button onClick={()=>openSignup("signup")} className="hidden md:block bg-[rgba(25,17,51,0.5)] border-2 border-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-2xl">
-          signup
-        </button>
 
         <DropDownBtn  logOut={LogOut}/>
         </div>
