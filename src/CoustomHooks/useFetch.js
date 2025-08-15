@@ -5,6 +5,7 @@ const useFetch = (url, method = "GET", body = null) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [noData,setNodata] =useState('')
 
   const fetchData = async () => {
     setLoading(true);
@@ -17,7 +18,7 @@ const useFetch = (url, method = "GET", body = null) => {
       });
       setData(response.data);
     } catch (err) {
-      setError(err.response?.data || "Something went wrong!");
+      setError(err.response?.data.message || "Something went wrong!");
     } finally {
       setLoading(false);
     }

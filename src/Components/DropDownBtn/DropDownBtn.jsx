@@ -12,6 +12,8 @@ import {   DropdownMenu,
 
 export function DropDownBtn({logOut}) {
     const {  role } = useSelector((state) => state.user);
+    console.log(role);
+    
 
   return (
     <DropdownMenu>
@@ -34,13 +36,22 @@ export function DropDownBtn({logOut}) {
       <DropdownMenuContent>
         <Link to={"/myjob"}>
         <DropdownMenuItem>Profile</DropdownMenuItem></Link>
-        <Link to={"/admin"}>
-        <DropdownMenuItem>Admin</DropdownMenuItem></Link>
+        {
+            role == "admin"||role === 'employer' &&   <Link to={"/admin"}>
+       
+          <DropdownMenuItem>Admin</DropdownMenuItem>
+     
+
+        </Link>
+
+        }
+      
+      
 
         <span onClick={logOut}>
 
    
-        <DropdownMenuItem   >Logout</DropdownMenuItem>     </span>
+        <DropdownMenuItem>Logout</DropdownMenuItem>     </span>
         {role === 'admin' || role === 'employer' ? (
         <Link to="/admin">
           <DropdownMenuItem>Post Job</DropdownMenuItem>

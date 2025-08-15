@@ -9,8 +9,10 @@ const UserNav = ({ openLogin, openSignup }) => {
   const navigate =useNavigate()
   const dispatch =useDispatch()
   const [isOpen, setIsOpen] = useState(false);
-  const { token } = useSelector((state) => state.user);
-  console.log(token);
+  const { token, } = useSelector((state) => state.user);
+  const {  role } = useSelector((state) => state.user);
+  console.log(role);
+  
   
 
   const LogOut =()=>{

@@ -3,7 +3,8 @@ import axios from "axios";
 
 // Create Axios instance
 const instance = axios.create({
-    baseURL: "https://job-board-be-21s5.onrender.com/api/v1/", // Ensure API is up
+    // baseURL: "https://job-board-be-21s5.onrender.com/api/v1/", // Ensure API is up
+    baseURL: "http://localhost:4000/api/v1/", // Ensure API is up
     withCredentials: true, // Ensures cookies are sent
 });
 
