@@ -1,23 +1,36 @@
-import React from "react";
+import React, { lazy } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import MainLayout from "./Layouts/MainLayout";
-import AdminLayout from "./Layouts/AdminLayout";
-import LandingPage from "./Pages/LandingPage";
-import JobsPage from "./Pages/JobsPage";
-import MyJobs from "./Pages/MyJobs";
-import PostJob from "./Pages/PostJob";
-import PostJobVerify from "./Pages/PostJobVerify";
-import RecommendedJobs from "./Pages/RecommendedJobs";
-import SeekerApplied from "./Pages/SeekerApplied";
-import JobDetails from "./Pages/JobDetails";
-import AdminAllJobs from "./Pages/AdminAllJobs";
+
+// Lazy load layouts
+const MainLayout = lazy(() => import("./Layouts/MainLayout"));
+const AdminLayout = lazy(() => import("./Layouts/AdminLayout"));
+
+// Lazy load pages
+const LandingPage = lazy(() => import("./Pages/LandingPage"));
+const JobsPage = lazy(() => import("./Pages/JobsPage"));
+const MyJobs = lazy(() => import("./Pages/MyJobs"));
+const PostJob = lazy(() => import("./Pages/PostJob"));
+const PostJobVerify = lazy(() => import("./Pages/PostJobVerify"));
+const RecommendedJobs = lazy(() => import("./Pages/RecommendedJobs"));
+const SeekerApplied = lazy(() => import("./Pages/SeekerApplied"));
+const JobDetails = lazy(() => import("./Pages/JobDetails"));
+const AdminAllJobs = lazy(() => import("./Pages/AdminAllJobs"));
+
+// Protected routes
 import UserRoute from "./Utils/protectedRoutes/UserRoutes";
 import EmpolyerRoutes from "./Utils/protectedRoutes/EmpolyerRoutes";
+
+// Fallback Loader
+const Loader = () => <div className="p-6 text-center">Loading...</div>;
 
 const appRouter = (openModal) =>
   createBrowserRouter([
     {
-      element: <MainLayout openLogin={openModal} openSignup={openModal} />,
+      element: (
+        <React.Suspense fallback={<Loader />}>
+          <MainLayout openLogin={openModal} openSignup={openModal} />
+        </React.Suspense>
+      ),
       children: [
         { path: "/", element: <LandingPage /> },
         { path: "*", element: <Navigate to="/" /> },
@@ -26,7 +39,9 @@ const appRouter = (openModal) =>
     {
       element: (
         <UserRoute>
-          <MainLayout />
+          <React.Suspense fallback={<Loader />}>
+            <MainLayout />
+          </React.Suspense>
         </UserRoute>
       ),
       children: [
@@ -41,7 +56,9 @@ const appRouter = (openModal) =>
     {
       element: (
         <EmpolyerRoutes>
-          <AdminLayout />
+          <React.Suspense fallback={<Loader />}>
+            <AdminLayout />
+          </React.Suspense>
         </EmpolyerRoutes>
       ),
       children: [
