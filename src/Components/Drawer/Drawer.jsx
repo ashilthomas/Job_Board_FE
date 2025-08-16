@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -18,29 +18,26 @@ import {
   DrawerTrigger,
 } from "../ui/drawer";
 
-// Validation Schema
+// ✅ Validation Schema
 const schema = yup.object().shape({
   resume: yup
     .mixed()
-    .required("You must upload a file")
-    .test(
-      "fileSize",
-      "File size too large (Max: 2MB)",
-      (value) => value && value[0]?.size <= 2 * 1024 * 1024
+    .required("Please upload your resume (PDF or DOCX, max 2MB)")
+    .test("fileSize", "File size must be less than 2MB", (value) =>
+      value ? value[0]?.size <= 2 * 1024 * 1024 : false
     )
-    .test(
-      "fileFormat",
-      "Unsupported format (Only PDF & DOCX)",
-      (value) =>
-        value &&
-        ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"].includes(
-          value[0]?.type
-        )
+    .test("fileFormat", "Only PDF or DOCX allowed", (value) =>
+      value
+        ? ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"].includes(
+            value[0]?.type
+          )
+        : false
     ),
 });
 
 export function DrawerDemo({ id }) {
   const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -50,6 +47,7 @@ export function DrawerDemo({ id }) {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = async (data) => {
+    setLoading(true);
     const formData = new FormData();
     formData.append("resume", data.resume[0]);
 
@@ -61,7 +59,11 @@ export function DrawerDemo({ id }) {
 
       toast({
         title: response.data.success ? "Application Submitted!" : "Application Failed",
-        description: response.data.message || (response.data.success ? "Your job application was successful." : "Something went wrong."),
+        description:
+          response.data.message ||
+          (response.data.success
+            ? "Your job application was successful."
+            : "Something went wrong."),
         variant: response.data.success ? "default" : "destructive",
       });
 
@@ -69,18 +71,25 @@ export function DrawerDemo({ id }) {
     } catch (error) {
       toast({
         title: "Error",
-        description: error.response?.data?.message || "Failed to apply for the job.",
+        description:
+          error.response?.data?.message ||
+          "Network error: Failed to apply for the job.",
         variant: "destructive",
       });
       console.error("Upload error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Button className="mt-6 bg-primary text-primary-foreground py-3 rounded-full px-10 hover:bg-purple-700">
-          Apply
+        <Button
+          className="mt-6 bg-primary text-primary-foreground py-3 rounded-full px-10 hover:bg-purple-700"
+          disabled={loading}
+        >
+          {loading ? "Submitting..." : "Apply"}
         </Button>
       </DrawerTrigger>
 
@@ -90,16 +99,27 @@ export function DrawerDemo({ id }) {
             <DrawerTitle>Add Your CV/Resume</DrawerTitle>
           </DrawerHeader>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="px-6 py-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="px-6 py-4 space-y-4">
             <div className="border px-4 py-4 rounded-lg">
-              <input type="file" {...register("resume")} className="block w-full" />
-              {errors.resume && <p className="text-red-500 text-sm mt-1">{errors.resume.message}</p>}
+              <input
+                type="file"
+                {...register("resume")}
+                className="block w-full"
+                aria-label="Upload Resume"
+              />
+              {errors.resume && (
+                <p className="text-red-500 text-sm mt-1">{errors.resume.message}</p>
+              )}
             </div>
 
-            <DrawerFooter className="mt-4">
-              <Button type="submit">Submit</Button>
+            <DrawerFooter className="mt-4 flex gap-2">
+              <Button type="submit" disabled={loading}>
+                {loading ? "Uploading..." : "Submit"}
+              </Button>
               <DrawerClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline" disabled={loading}>
+                  Cancel
+                </Button>
               </DrawerClose>
             </DrawerFooter>
           </form>
