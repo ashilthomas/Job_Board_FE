@@ -14,7 +14,6 @@ function AdminAllJobs() {
   const { role } = useSelector((state) => state.user);
   const apiEndpoint = role === "employer" ? "employerJob" : "job";
   const { data, loading, error, fetchData } = useFetch(apiEndpoint);
-  
 
   const handleStatusChange = async (jobId, newStatus) => {
     try {
@@ -28,9 +27,7 @@ function AdminAllJobs() {
   const handleDelete = async (jobId) => {
     try {
       await instance.delete(`deleteJob/${jobId}`);
-      await fetchData(); 
-
-     
+      await fetchData();
     } catch (error) {
       console.error("Error deleting job:", error);
     }
@@ -46,8 +43,8 @@ function AdminAllJobs() {
       ) : (
       
         data?.empJobs?.map((job) => (
-            <Link to={`/seekerapplyedjobs/${job._id}`}>
-          <div key={job._id} className="border border-slate-700 rounded-sm m-10">
+            <Link key={job._id} to={`/seekerapplyedjobs/${job._id}`}>
+          <div className="border border-slate-700 rounded-sm m-10">
             <h2 className="px-10 pt-5 text-2xl flex items-center gap-2">
               {job.title}
             </h2>

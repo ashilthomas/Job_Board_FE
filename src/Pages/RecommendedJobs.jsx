@@ -36,20 +36,6 @@ function RecommendedJobs() {
                  </Link>
                </CardFooter>
              </Card>
-        // <div key={item.job._id} className="job-card">
-        //   <h2>{item.job.title}</h2>
-        //   <p>{item.job.description}</p>
-        //   <p>Location: {item.job.location}</p>
-        //   <p>Experience Level: {item.job.experienceLevel}</p>
-        //   <p>Job Type: {item.job.jobType}</p>
-        //   <p>Match Score: {item.matchScore}%</p>
-        //   <p>Skills Required:</p>
-        //   <ul>
-        //     {item.job.skillsRequired.map((skill, index) => (
-        //       <li key={index}>{skill}</li>
-        //     ))}
-        //   </ul>
-        // </div>
       ))}
     </div>
   );

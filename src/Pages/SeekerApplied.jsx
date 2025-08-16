@@ -14,18 +14,14 @@ import instance from "@/Utils/Axios";
 
 function SeekerApplied() {
   const { id } = useParams();
-  const { data, loading, error,  fetchData } = useFetch(
+  const { data, loading, error, fetchData } = useFetch(
     `application/getApplicationForEmployer/${id}`
   );
-  console.log(data);
-  
 
   if (loading) return <h2>Loading...</h2>;
   if (error) return <h2 className="text-red-500">Error fetching data.</h2>;
 
   const handleStatusChange = async (applicantId, newStatus) => {
-    console.log(applicantId);
-    
     try {
       await instance.put(`application/updateStatus/${applicantId}`, {
         status: newStatus,
