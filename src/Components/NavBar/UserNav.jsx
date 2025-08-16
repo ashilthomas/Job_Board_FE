@@ -11,7 +11,7 @@ const UserNav = ({ openLogin, openSignup }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { token, } = useSelector((state) => state.user);
   const {  role } = useSelector((state) => state.user);
-  console.log(role);
+  console.log(token);
   
   
 
