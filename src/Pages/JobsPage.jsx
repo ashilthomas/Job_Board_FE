@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/Components/ui/button';
 import { Input } from '@/Components/ui/input';
@@ -16,6 +16,34 @@ import {  Select,
   SelectTrigger,
   SelectValue, } from '@/Components/ui/select';
 
+// Memoized Job Card component to prevent unnecessary re-renders
+const JobCard = memo(({ job }) => {
+  return (
+    <Card>
+      <CardHeader>
+        <h2 className="text-lg">{job.title}</h2>
+        <div className="flex justify-between border-b pb-2 mt-3">
+          <h3 className="">img</h3>
+          <h3 className="text-slate-400 text-sm">{job.location}</h3>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <CardDescription>{job.description}</CardDescription>
+      </CardContent>
+      <CardFooter>
+        <Link to={`/jobdetails/${job._id}`} className="w-full block">
+          <Button
+            variant="purple"
+            className="bg-purple-600 text-white px-4 py-2 rounded-full w-full hover:bg-purple-700"
+          >
+            More Info
+          </Button>
+        </Link>
+      </CardFooter>
+    </Card>
+  );
+});
+
 function JobsPage() {
   const [inputValue, setInputValue] = useState('');
   const [jobs, setJobs] = useState([]);
@@ -28,7 +56,7 @@ function JobsPage() {
     location: ''
   });
 
-  const handleClearFilters = () => {
+  const handleClearFilters = useCallback(() => {
     setFilters({
       jobType: '',
       experienceLevel: '',
@@ -37,15 +65,11 @@ function JobsPage() {
     setInputValue(''); // Clear search input
     setCurrentPage(1); // Reset to first page
     fetchJobs(); // Refetch jobs without filters
-  };
+  }, [fetchJobs]);
   
 
-  // Fetch jobs from the API
-  useEffect(() => {
-    fetchJobs();
-  }, [currentPage]);
-
-  const fetchJobs = async () => {
+  // Define fetchJobs with useCallback to prevent unnecessary re-renders
+  const fetchJobs = useCallback(async () => {
     setLoading(true);
     try {
       const response = await instance.get('job/search', {
@@ -68,41 +92,60 @@ function JobsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, inputValue]);
+
+  // Fetch jobs from the API
+  useEffect(() => {
+    fetchJobs();
+  }, [fetchJobs]);
+
+  // Handle input change for search with debounce
+  const [debouncedInputValue, setDebouncedInputValue] = useState('');
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedInputValue(inputValue);
+    }, 500); // 500ms delay
+    
+    return () => clearTimeout(timer);
+  }, [inputValue]);
 
   // Handle input change for search
-  const handleInputChange = (event) => {
+  const handleInputChange = useCallback((event) => {
     setInputValue(event.target.value);
-  };
+  }, []);
 
   // Handle search form submission
-  const handleSearch = (event) => {
+  const handleSearch = useCallback((event) => {
     event.preventDefault();
     setCurrentPage(1); // Reset to first page on new search
     fetchJobs();
-  };
+  }, [fetchJobs]);
 
   // Handle page change
-  const handlePageChange = (newPage) => {
+  const handlePageChange = useCallback((newPage) => {
     setCurrentPage(newPage);
-  };
+  }, []);
 
   // Handle filter change
-  const handleFilterChange = (key, value) => {
+  const handleFilterChange = useCallback((key, value) => {
     setFilters(prevFilters => ({
       ...prevFilters,
       [key]: value
     }));
-  };
+    setCurrentPage(1); // Reset to first page when filters change
+  }, []);
 
-  // Filter jobs based on selected filters
-  const filteredJobs = jobs.filter(job => {
-    return (
-      (filters.jobType === '' || job.jobType === filters.jobType) &&
-      (filters.experienceLevel === '' || job.experienceLevel === filters.experienceLevel) &&
-      (filters.location === '' || job.location === filters.location)
-    );
-  });
+  // Filter jobs based on selected filters using useMemo for performance
+  const filteredJobs = useMemo(() => {
+    return jobs.filter(job => {
+      return (
+        (filters.jobType === '' || job.jobType === filters.jobType) &&
+        (filters.experienceLevel === '' || job.experienceLevel === filters.experienceLevel) &&
+        (filters.location === '' || job.location === filters.location)
+      );
+    });
+  }, [jobs, filters.jobType, filters.experienceLevel, filters.location]);
 
   // Loading state
   if (loading) {
@@ -204,28 +247,7 @@ function JobsPage() {
         <>
           <div className="mt-5 grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4">
             {filteredJobs.map((job, i) => (
-              <Card key={i}>
-                <CardHeader>
-                  <h2 className="text-lg">{job.title}</h2>
-                  <div className="flex justify-between border-b pb-2 mt-3">
-                    <h3 className="">img</h3>
-                    <h3 className="text-slate-400 text-sm">{job.location}</h3>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription>{job.description}</CardDescription>
-                </CardContent>
-                <CardFooter>
-                  <Link to={`/jobdetails/${job._id}`} className="w-full block">
-                    <Button
-                      variant="purple"
-                      className="bg-purple-600 text-white px-4 py-2 rounded-full w-full hover:bg-purple-700"
-                    >
-                      More Info
-                    </Button>
-                  </Link>
-                </CardFooter>
-              </Card>
+              <JobCard key={i} job={job} />
             ))}
           </div>
 
