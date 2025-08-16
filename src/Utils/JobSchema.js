@@ -1,39 +1,57 @@
+// src/Utils/JobSchema.js
 import * as yup from "yup";
 
 export const jobSchema = yup.object().shape({
-  title: yup.string().required("Job title is required"),
-  description: yup.string().required("Description is required"),
-  location: yup.string().required("Location is required"),
+  title: yup.string().trim().required("Job title is required"),
+  description: yup.string().trim().required("Description is required"),
+  location: yup.string().trim().required("Location is required"),
+
   minSalary: yup
     .number()
-    .typeError("Minimum salary must be a number")
-    .required("Minimum salary is required"),
+    .required("Minimum salary is required")
+    .min(0, "Minimum salary cannot be negative"),
+
   maxSalary: yup
     .number()
-    .typeError("Maximum salary must be a number")
     .required("Maximum salary is required")
-    .min(yup.ref("minSalary"), "Maximum salary must be greater than minimum salary"),
-    skillsRequired: yup
+    .moreThan(yup.ref("minSalary"), "Maximum salary must be greater than minimum salary"),
+
+  skillsRequired: yup
     .array()
-    .of(yup.string().required("Skill cannot be empty"))
-    .transform((value, originalValue) =>
-      typeof originalValue === "string"
-        ? originalValue.split(",").map((skill) => skill.trim())
-        : value
-    )
-    .required("At least one skill is required"),
+    .of(yup.string().trim().required("Skill cannot be empty"))
+    .transform((value, originalValue) => {
+      if (typeof originalValue === "string") {
+        return originalValue
+          .split(",")
+          .map((skill) => skill.trim())
+          .filter((skill) => skill.length > 0);
+      }
+      return value;
+    })
+    .min(1, "At least one skill is required"),
+
   experienceLevel: yup
     .string()
     .required("Experience level is required")
-    .oneOf(["Entry", "Mid", "Senior"], "Experience level must be one of Entry, Mid, or Senior"),
+    .oneOf(["Entry", "Mid", "Senior"], "Invalid experience level"),
+
   jobType: yup
     .string()
     .required("Job type is required")
     .oneOf(["Full-time", "Part-time", "Contract", "Remote"], "Invalid job type"),
+
   status: yup
     .string()
     .oneOf(["Open", "Closed"], "Status must be Open or Closed")
     .default("Open"),
-    image: yup.mixed().required(' photo is required')
-  
+
+  image: yup
+    .mixed()
+    .required("Photo is required")
+    .test("fileSize", "File size too large", (file) =>
+      file ? file.size <= 2 * 1024 * 1024 : false // 2MB max
+    )
+    .test("fileType", "Unsupported file format", (file) =>
+      file ? ["image/jpeg", "image/png"].includes(file.type) : false
+    ),
 });

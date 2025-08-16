@@ -1,27 +1,34 @@
+// src/Redux/store.js
 import { configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 import userData from "./userData";
-import persistReducer from "redux-persist/es/persistReducer";
-import storage from "redux-persist/lib/storage";
+
+// Persist config
 const persistConfig = {
-    key: 'user', // Key for the persisted state
-    storage,     // Storage method (localStorage in this case)
-  };
-  
-  // Create a persisted reducer
-  const persistedReducer = persistReducer(persistConfig, userData);
-  
-  // Configure the store
-  const store = configureStore({
-    reducer: {
-      user: persistedReducer, // Use the persisted reducer
-    },
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware({
-        serializableCheck: {
-          // Ignore redux-persist actions
-          ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
-        },
-      }),
-  });
-  
-  export default store;
+  key: "user", // persisted key in localStorage
+  storage,
+};
+
+// Wrap reducer with persist
+const persistedUserReducer = persistReducer(persistConfig, userData);
+
+// Configure store
+const store = configureStore({
+  reducer: {
+    user: persistedUserReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore redux-persist actions
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+      },
+    }),
+  devTools: process.env.NODE_ENV !== "production", // enable devTools only in dev
+});
+
+// Persistor for rehydration
+export const persistor = persistStore(store);
+
+export default store;
