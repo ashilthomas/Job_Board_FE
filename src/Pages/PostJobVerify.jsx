@@ -28,8 +28,7 @@ function PostJobVerify() {
     const onSubmit = async (data) => {
         try {
             const response = await instance.put('/auth/updateEmploye', data);
-            console.log("Response Status:", response.status);
-            console.log("Response Data:", response.data);
+         
             
             if (response.data.success) {
                 dispatch(updateUserRole({ role: response.data.user.role }))

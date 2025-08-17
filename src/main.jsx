@@ -12,15 +12,13 @@ import ErrorBoundary from "./Components/ErrorBoundary/ErrorBoundary";
 const persistor = persistStore(store);
 
 createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+ 
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <ErrorBoundary>
-
       
-        <App />
-          </ErrorBoundary>
+          <App />
+ 
       </PersistGate>
     </Provider>
-  </React.StrictMode>
+
 );

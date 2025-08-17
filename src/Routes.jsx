@@ -14,11 +14,14 @@ const PostJobVerify = lazy(() => import("./Pages/PostJobVerify"));
 const RecommendedJobs = lazy(() => import("./Pages/RecommendedJobs"));
 const SeekerApplied = lazy(() => import("./Pages/SeekerApplied"));
 const JobDetails = lazy(() => import("./Pages/JobDetails"));
-const AdminAllJobs = lazy(() => import("./Pages/AdminAllJobs"));
+// const ManageJobs = lazy(() => import("./Pages/ManageJobs"));
+import ManageJobs from "./Pages/ManageJobs";
 
 // Protected routes
-import UserRoute from "./Utils/protectedRoutes/UserRoutes";
+import UserRoute from "./Utils/protectedRoutes/ProtectedRoute";
 import EmpolyerRoutes from "./Utils/protectedRoutes/EmpolyerRoutes";
+import ProtectedRoute from "./Utils/protectedRoutes/ProtectedRoute";
+
 
 // Fallback Loader
 const Loader = () => <div className="p-6 text-center">Loading...</div>;
@@ -38,32 +41,48 @@ const appRouter = (openModal) =>
     },
     {
       element: (
-        <UserRoute>
+        <ProtectedRoute checkEndpoint="checkUser">
           <React.Suspense fallback={<Loader />}>
             <MainLayout />
           </React.Suspense>
-        </UserRoute>
+        </ProtectedRoute>
       ),
       children: [
         { path: "/myjob", element: <MyJobs /> },
-        { path: "/employer", element: <PostJobVerify /> },
         { path: "/recommended", element: <RecommendedJobs /> },
         { path: "/seekerapplyedjobs/:id", element: <SeekerApplied /> },
         { path: "/jobdetails/:id", element: <JobDetails /> },
         { path: "/jobs", element: <JobsPage /> },
+        // { path: "/employer/managejobs", element: <PostJobVerify /> },
+        { path: "/employer/verify", element: <PostJobVerify /> }
       ],
     },
     {
       element: (
-        <EmpolyerRoutes>
+        <ProtectedRoute checkEndpoint="checkEmployer">
+          <React.Suspense fallback={<Loader />}>
+            <MainLayout />
+          </React.Suspense>
+        </ProtectedRoute>
+      ),
+      children: [
+        { path: "/employer/addjob", element: <PostJob /> },
+        { path: "/employer/managejobs", element: <ManageJobs/> },
+        ,
+      ],
+    },
+    {
+      element: (
+        <ProtectedRoute checkEndpoint="checkAdmin">
           <React.Suspense fallback={<Loader />}>
             <AdminLayout />
           </React.Suspense>
-        </EmpolyerRoutes>
+        </ProtectedRoute>
       ),
       children: [
         { path: "/admin", element: <PostJob /> },
-        { path: "/alljobs", element: <AdminAllJobs /> },
+        { path: "/alljobs", element: <ManageJobs /> },
+     
       ],
     },
   ]);
