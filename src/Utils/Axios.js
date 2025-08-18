@@ -1,11 +1,9 @@
-
 // src/Utils/Axios.js
 import axios from "axios";
 import store from "@/Redux/store";
-//  "https://job-board-be-21s5.onrender.com/api/v1/"
-// Detect environment → automatically choose API URL
-const BASE_URL =
-  "http://localhost:4000/api/v1/";
+
+// Choose API base automatically (switch localhost / production)
+const BASE_URL = "http://localhost:4000/api/v1/";
 
 // Create Axios instance
 const instance = axios.create({
@@ -16,7 +14,8 @@ const instance = axios.create({
 // Attach token to requests
 instance.interceptors.request.use(
   (config) => {
-    const token = store.getState()?.user?.token;
+    // FIXED: use the correct slice name
+    const token = store.getState()?.userData?.token;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -25,7 +24,7 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Handle global errors (optional improvement)
+// Handle global errors
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -37,3 +36,5 @@ instance.interceptors.response.use(
 );
 
 export default instance;
+
+//  "https://job-board-be-21s5.onrender.com/api/v1/"

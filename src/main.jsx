@@ -11,6 +11,7 @@ import ErrorBoundary from "./Components/ErrorBoundary/ErrorBoundary";
 
 const persistor = persistStore(store);
 
+
 createRoot(document.getElementById("root")).render(
  
     <Provider store={store}>

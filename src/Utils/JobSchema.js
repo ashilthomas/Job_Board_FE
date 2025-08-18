@@ -48,9 +48,7 @@ export const jobSchema = yup.object().shape({
   image: yup
     .mixed()
     .required("Photo is required")
-    .test("fileSize", "File size too large", (file) =>
-      file ? file.size <= 2 * 1024 * 1024 : false // 2MB max
-    )
+    .test("fileSize", "File size too large", )
     .test("fileType", "Unsupported file format", (file) =>
       file ? ["image/jpeg", "image/png"].includes(file.type) : false
     ),

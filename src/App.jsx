@@ -1,28 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "./Components/theame";
 import { Toaster } from "./Components/ui/toaster";
 import LoginModal from "./Pages/LoginModal";
- // All routes centralized
-import "./App.css"; // Only app-wide styles
+import "./App.css"; // App-wide styles
 import appRouter from "./Routes";
+import SmoothScrollSmoother from "./Components/SmoothScrollSmoother/SmoothScrollSmoother";
+
+
+
+
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [authView, setAuthView] = useState("login"); // "login" or "signup"
+  const [modalState, setModalState] = useState({ isOpen: false, view: "login" });
 
-  const openModal = (view) => {
-    setAuthView(view);
-    setIsModalOpen(true);
-  };
+  const openModal = (view = "login") => setModalState({ isOpen: true, view });
+  const closeModal = () => setModalState({ isOpen: false, view: "login" });
 
-  const closeModal = () => setIsModalOpen(false);
+  // Memoize router to prevent re-creating on every render
+  const router = useMemo(() => appRouter(openModal), [openModal]);
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      {isModalOpen && <LoginModal closeModal={closeModal} initialView={authView} />}
+      {modalState.isOpen && (
+        <LoginModal closeModal={closeModal} initialView={modalState.view} />
+      )}
       <Toaster />
-      <RouterProvider router={appRouter(openModal)} />
+   
+
+      <RouterProvider router={router} />
+     
     </ThemeProvider>
   );
 }

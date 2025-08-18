@@ -1,10 +1,18 @@
-// src/CoustomHooks/useFetch.js
 import { useState, useEffect, useCallback } from "react";
 import instance from "@/Utils/Axios"; // Custom Axios instance
 
-const useFetch = (url, method = "GET", body = null) => {
+/**
+ * Custom hook to fetch data
+ * @param {string} url - API endpoint (relative to Axios baseURL)
+ * @param {string} method - HTTP method (GET, POST, PUT, DELETE)
+ * @param {object|null} body - Request body for POST/PUT
+ * @param {boolean} autoFetch - Should auto fetch on mount (default true)
+ */
+const useFetch = (url, method = "GET", body = null, autoFetch = true) => {
+  console.log(url,method);
+  
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(autoFetch);
   const [error, setError] = useState(null);
 
   const fetchData = useCallback(
@@ -12,7 +20,6 @@ const useFetch = (url, method = "GET", body = null) => {
       setLoading(true);
       setError(null);
 
-      // Setup cancellation in case of rapid re-fetch
       const controller = new AbortController();
 
       try {
@@ -36,15 +43,16 @@ const useFetch = (url, method = "GET", body = null) => {
     [url, method, body]
   );
 
-  // Auto-fetch only for GET requests
+  // Auto-fetch for GET requests by default
   useEffect(() => {
-    if (method.toUpperCase() === "GET") {
+    if (autoFetch) {
       const abortFn = fetchData();
       return abortFn;
     }
-  }, [url, method, fetchData]);
+  }, [url, method, fetchData, autoFetch]);
 
   return { data, loading, error, fetchData };
 };
 
 export default useFetch;
+

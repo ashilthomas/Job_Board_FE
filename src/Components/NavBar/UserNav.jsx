@@ -20,8 +20,8 @@ const UserNav = ({ openLogin, openSignup }) => {
 
   return (
     <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-6xl 
-      bg-white/20 backdrop-blur-md border border-white/30 shadow-lg 
-      rounded-2xl px-6 py-3">
+  bg-white/20 backdrop-blur-md border border-white/30 shadow-lg 
+  rounded-2xl px-6 py-3">
       <div className="flex items-center justify-between">
         {/* Logo */}
         <Link to={"/"}>

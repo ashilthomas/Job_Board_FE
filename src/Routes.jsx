@@ -17,9 +17,7 @@ const JobDetails = lazy(() => import("./Pages/JobDetails"));
 // const ManageJobs = lazy(() => import("./Pages/ManageJobs"));
 import ManageJobs from "./Pages/ManageJobs";
 
-// Protected routes
-import UserRoute from "./Utils/protectedRoutes/ProtectedRoute";
-import EmpolyerRoutes from "./Utils/protectedRoutes/EmpolyerRoutes";
+// Protected route
 import ProtectedRoute from "./Utils/protectedRoutes/ProtectedRoute";
 
 

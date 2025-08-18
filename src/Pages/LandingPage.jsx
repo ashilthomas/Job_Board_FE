@@ -3,6 +3,7 @@ import React from "react";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
 import LogoCrsl from "@/Components/LogoCrsl/LogoCrsl";
+import SmoothScrollSmoother from "../Components/SmoothScrollSmoother/SmoothScrollSmoother";
 
 
 function LandingPage() {
@@ -170,43 +171,50 @@ function LandingPage() {
   ];
 
   return (
-    <main className="">
+    <main className="relative">
       {/* Hero */}
-      <div className=" flex flex-col gap-20 h-[100vh] py-10 items-center">
-        <div className="mt-10 ">
-          <h2 className="text-7xl font-bold text-center mb-5">
-            Get The <span className="text-purple-600">Right Job</span>
-          </h2>
-          <h2 className="text-7xl font-bold text-center mb-5">You Deserve</h2>
-          <h6 className="text-lg font-normal text-center mb-5">
-            1,80,570 jobs listed here! Your dream job is waiting.
-          </h6>
-        </div>
 
-        <form className="grid grid-cols-1 border-purple-500 border sm:grid-cols-2 sm:gap-y-3 gap-y-3 md:grid-cols-4 md:gap-y-0 drop-shadow-2xl bg-black p-3 md:p-5 rounded-md md:rounded-full md:w-7/12 w-full">
-          <Input
-            placeholder="Keywords (e.g., Developer, Designer)"
-            aria-label="Search keywords"
-            className="input-placeholder w-full"
-          />
-          <Input
-            placeholder="Location (e.g., New York)"
-            aria-label="Search location"
-            className="input-placeholder w-full md:border-l border-slate-400"
-          />
-          <Input
-            placeholder="Categories (e.g., IT, Marketing)"
-            aria-label="Search categories"
-            className="input-placeholder w-full md:border-l border-slate-400"
-          />
-          <Button
-            variant="purple"
-            className="bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-700"
-          >
-            Search Jobs
-          </Button>
-        </form>
-      </div>
+      <SmoothScrollSmoother>
+
+
+  <div className="flex flex-col items-center justify-center h-screen gap-10 px-4">
+  {/* Header */}
+  <div className="text-center">
+    <h2 className="text-7xl font-bold mb-5">
+      Get The <span className="text-purple-600">Right Job</span>
+    </h2>
+    <h2 className="text-7xl font-bold mb-5">You Deserve</h2>
+    <h6 className="text-lg font-normal mb-5">
+      1,80,570 jobs listed here! Your dream job is waiting.
+    </h6>
+  </div>
+
+  {/* Search Form */}
+  <form className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-y-3 md:gap-y-0 bg-black p-3 md:p-5 rounded-md md:rounded-full md:w-7/12 w-full drop-shadow-2xl border border-purple-500">
+    <Input
+      placeholder="Keywords (e.g., Developer, Designer)"
+      aria-label="Search keywords"
+      className="w-full"
+    />
+    <Input
+      placeholder="Location (e.g., New York)"
+      aria-label="Search location"
+      className="w-full md:border-l border-slate-400"
+    />
+    <Input
+      placeholder="Categories (e.g., IT, Marketing)"
+      aria-label="Search categories"
+      className="w-full md:border-l border-slate-400"
+    />
+    <Button
+      variant="purple"
+      className="bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-700"
+    >
+      Search Jobs
+    </Button>
+  </form>
+</div>
+
 
       {/* About */}
       <section className="about-section">
@@ -292,6 +300,7 @@ function LandingPage() {
           </div>
         </div>
       </section>
+            </SmoothScrollSmoother>
     </main>
   );
 }
