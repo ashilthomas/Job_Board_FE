@@ -45,11 +45,8 @@ export const jobSchema = yup.object().shape({
     .oneOf(["Open", "Closed"], "Status must be Open or Closed")
     .default("Open"),
 
-  image: yup
-    .mixed()
-    .required("Photo is required")
-    .test("fileSize", "File size too large", )
-    .test("fileType", "Unsupported file format", (file) =>
-      file ? ["image/jpeg", "image/png"].includes(file.type) : false
-    ),
+image: yup
+  .mixed()
+  .required("Photo is required")
+ 
 });
