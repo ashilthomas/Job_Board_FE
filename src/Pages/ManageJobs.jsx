@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from "@/Components/ui/select";
 import { Link } from "react-router-dom";
+import Loader from "@/Components/Loader/Loader";
 
 function ManageJobs() {
   const { role } = useSelector((state) => state.user);
@@ -34,7 +35,7 @@ function ManageJobs() {
     }
   };
 
-  if (loading) return <h2>Loading...</h2>;
+  if (loading) return <Loader/>;
   if (error) return <h2 className="text-red-500">Error loading jobs.</h2>;
 
   return (

@@ -1,3 +1,4 @@
+import Loader from '@/Components/Loader/Loader';
 import ViewResume from '@/Components/ViewResume/ViewResume';
 import useFetch from '@/CoustomHooks/useFetch';
 import React from 'react'
@@ -5,7 +6,7 @@ import React from 'react'
 function MyJobs() {
     const { data, loading, error } = useFetch("application/myjobs");
 
-    if (loading) return <p>Loading...</p>; // Show loader
+    if (loading) return <Loader/>; // Show loader
     if (error) return <p className="text-red-500">Error: {error}</p>; // Show error
 
     return (

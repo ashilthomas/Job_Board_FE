@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { DrawerDemo } from "@/Components/Drawer/Drawer";
 import useFetch from "@/CoustomHooks/useFetch";
+import Loader from "../Components/Loader/Loader"
 
 function JobDetails() {
   const { id } = useParams();
@@ -9,7 +10,7 @@ function JobDetails() {
   // Fetch job details by ID
   const { data, loading, error } = useFetch(`jobDetails/${id}`, "GET");
 
-  if (loading) return <h2 className="text-center mt-10">Loading...</h2>;
+  if (loading) return <Loader/>;
   if (error) return <h2 className="text-center text-red-500 mt-10">{error}</h2>;
 
   // Make sure we have job data

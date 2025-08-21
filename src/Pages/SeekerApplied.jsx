@@ -10,6 +10,7 @@ import {  Select,
     SelectValue, } from "@/Components/ui/select";
 import useFetch from "@/CoustomHooks/useFetch";
 import instance from "@/Utils/Axios";
+import Loader from "@/Components/Loader/Loader";
 
 
 function SeekerApplied() {
@@ -18,7 +19,7 @@ function SeekerApplied() {
     `application/getApplicationForEmployer/${id}`
   );
 
-  if (loading) return <h2>Loading...</h2>;
+  if (loading) return <Loader/>;
   if (error) return <h2 className="text-red-500">Error fetching data.</h2>;
 
   const handleStatusChange = async (applicantId, newStatus) => {

@@ -14,6 +14,7 @@ const PostJobVerify = lazy(() => import("./Pages/PostJobVerify"));
 const RecommendedJobs = lazy(() => import("./Pages/RecommendedJobs"));
 const SeekerApplied = lazy(() => import("./Pages/SeekerApplied"));
 const JobDetails = lazy(() => import("./Pages/JobDetails"));
+import Loader  from "./Components/Loader/Loader";
 // const ManageJobs = lazy(() => import("./Pages/ManageJobs"));
 import ManageJobs from "./Pages/ManageJobs";
 
@@ -22,7 +23,7 @@ import ProtectedRoute from "./Utils/protectedRoutes/ProtectedRoute";
 
 
 // Fallback Loader
-const Loader = () => <div className="p-6 text-center">Loading...</div>;
+
 
 const appRouter = (openModal) =>
   createBrowserRouter([

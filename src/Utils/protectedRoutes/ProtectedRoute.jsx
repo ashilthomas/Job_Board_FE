@@ -4,6 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import instance from "../Axios";
 import LoginModel from "@/Pages/LoginModal";
+import Loader from "@/Components/Loader/Loader";
 
 const ProtectedRoute = ({ children, checkEndpoint }) => {
   const { token } = useSelector((state) => state.user);
@@ -61,7 +62,7 @@ const ProtectedRoute = ({ children, checkEndpoint }) => {
     }
   }, [token, checkEndpoint]);
 
-  if (isAuthenticated === null) return <h2>Loading...</h2>;
+  if (isAuthenticated === null) return <Loader/>;
 
   return (
     <>

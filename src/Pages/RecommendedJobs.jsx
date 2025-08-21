@@ -4,11 +4,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader } from '@/Components/ui/card';
+import Loader from '@/Components/Loader/Loader';
 
 function RecommendedJobs() {
   const { data, loading, error, refetch } = useFetch('recommend');
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader/>;
   if (error) return <p>Error: {error.message}</p>;
 
   return (
