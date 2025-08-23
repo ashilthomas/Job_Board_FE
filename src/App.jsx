@@ -7,12 +7,11 @@ import "./App.css"; // App-wide styles
 import appRouter from "./Routes";
 import SmoothScrollSmoother from "./Components/SmoothScrollSmoother/SmoothScrollSmoother";
 
-
-
-
-
 function App() {
-  const [modalState, setModalState] = useState({ isOpen: false, view: "login" });
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    view: "login",
+  });
 
   const openModal = (view = "login") => setModalState({ isOpen: true, view });
   const closeModal = () => setModalState({ isOpen: false, view: "login" });
@@ -26,10 +25,8 @@ function App() {
         <LoginModal closeModal={closeModal} initialView={modalState.view} />
       )}
       <Toaster />
-   
 
       <RouterProvider router={router} />
-     
     </ThemeProvider>
   );
 }

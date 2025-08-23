@@ -11,7 +11,7 @@ function MainLayout({ openLogin, openSignup }) {
       <UserNav openLogin={openLogin} openSignup={openSignup} />
 
       {/* Main content */}
-      <main className="flex-1 container max-w-6xl mx-auto px-4 py-6">
+      <main className="flex-1 container max-w-6xl mx-auto">
         <Outlet />
       </main>
 

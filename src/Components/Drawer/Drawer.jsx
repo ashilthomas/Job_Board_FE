@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -22,14 +21,14 @@ import {
 const schema = yup.object().shape({
   resume: yup
     .mixed()
-    .required("Please upload your resume (PDF or DOCX, max 2MB)")
+    .test("required", "Please upload your resume", (value) => value && value.length > 0)
     .test("fileSize", "File size must be less than 2MB", (value) =>
-      value ? value[0]?.size <= 2 * 1024 * 1024 : false
+      value && value[0] ? value[0].size <= 2 * 1024 * 1024 : false
     )
     .test("fileFormat", "Only PDF or DOCX allowed", (value) =>
-      value
+      value && value[0]
         ? ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"].includes(
-            value[0]?.type
+            value[0].type
           )
         : false
     ),
@@ -52,9 +51,9 @@ export function DrawerDemo({ id }) {
     formData.append("resume", data.resume[0]);
 
     try {
-      const response = await instance.post(`application/apply/${id}`, formData, {
+      // ⚠️ Check your backend route — I’m assuming plural `/applications`
+      const response = await instance.post(`/application/apply/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
-        withCredentials: true,
       });
 
       toast({
@@ -67,7 +66,7 @@ export function DrawerDemo({ id }) {
         variant: response.data.success ? "default" : "destructive",
       });
 
-      if (response.data.success) reset();
+      if (response.data.success) reset({ resume: null });
     } catch (error) {
       toast({
         title: "Error",
@@ -83,7 +82,7 @@ export function DrawerDemo({ id }) {
   };
 
   return (
-    <Drawer>
+    <Drawer >
       <DrawerTrigger asChild>
         <Button
           className="mt-6 bg-primary text-primary-foreground py-3 rounded-full px-10 hover:bg-purple-700"
@@ -103,6 +102,7 @@ export function DrawerDemo({ id }) {
             <div className="border px-4 py-4 rounded-lg">
               <input
                 type="file"
+                accept=".pdf,.docx"
                 {...register("resume")}
                 className="block w-full"
                 aria-label="Upload Resume"

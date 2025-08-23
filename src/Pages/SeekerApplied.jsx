@@ -35,7 +35,7 @@ function SeekerApplied() {
   };
 
   return (
-    <div className="w-[750px] m-auto border mt-5 px-10 py-5 rounded-lg">
+    <div className="w-[750px]  m-auto border mt-5 px-10 py-5 rounded-lg">
       {data && (
         <>
           <div className="border-b pb-5">

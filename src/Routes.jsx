@@ -4,7 +4,6 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 // Lazy load layouts
 const MainLayout = lazy(() => import("./Layouts/MainLayout"));
 const AdminLayout = lazy(() => import("./Layouts/AdminLayout"));
-
 // Lazy load pages
 const LandingPage = lazy(() => import("./Pages/LandingPage"));
 const JobsPage = lazy(() => import("./Pages/JobsPage"));
