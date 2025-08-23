@@ -14,8 +14,15 @@ import Loader from "@/Components/Loader/Loader";
 
 function ManageJobs() {
   const { role } = useSelector((state) => state.user);
+
   const apiEndpoint = role === "employer" ? "employerJob" : "job";
+
+  console.log(apiEndpoint);
+  
   const { data, loading, error, fetchData } = useFetch(apiEndpoint);
+
+  console.log(data);
+  
 
   const handleStatusChange = async (jobId, newStatus) => {
     try {
@@ -35,59 +42,89 @@ function ManageJobs() {
     }
   };
 
-  if (loading) return <Loader/>;
+  if (loading) return <Loader />;
   if (error) return <h2 className="text-red-500">Error loading jobs.</h2>;
 
   return (
-    <div className="py-24">
-      {data?.empJobs?.length === 0 ? (
-        <h2 className="text-center text-gray-500 mt-10">No jobs found.</h2>
-      ) : (
-        data.empJobs.map((job) => (
-          <div key={job._id} className="border border-slate-700 rounded-sm m-10">
-            {/* Only title is clickable */}
-            <Link to={`/seekerapplyedjobs/${job._id}`}>
-              <h2 className="px-10 pt-5 text-2xl flex items-center gap-2 cursor-pointer">
-                {job.title}
-              </h2>
-            </Link>
+  <div className="py-16 px-6 bg-gray-50 min-h-screen">
+  {data?.jobs?.length === 0 ? (
+    <h2 className="text-center text-gray-500 mt-10 text-lg">
+      No jobs found.
+    </h2>
+  ) : (
+    <div className="grid gap-6">
+      {data.jobs.map((job) => (
+        <div
+          key={job._id}
+          className="bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 border border-gray-200"
+        >
+          {/* Title clickable */}
+          <Link to={`/seekerapplyedjobs/${job._id}`}>
+            <h2 className="text-2xl font-semibold text-indigo-700 hover:text-indigo-900 cursor-pointer">
+              {job.title}
+            </h2>
+          </Link>
 
-            <div className="flex justify-between border-b border-slate-700 px-10 py-5">
-              <h2 className="text-base flex items-center gap-1">{job.location}</h2>
-              <h2 className="text-base flex items-center gap-1">{job.jobType}</h2>
-              <h2 className="text-base flex items-center">{job.status}</h2>
-            </div>
-
-            <div className="flex justify-between px-10 py-4">
-              {/* Render Select only when job exists */}
-              {job && (
-                <Select
-                 value={job.status}
-                  onValueChange={(val) => handleStatusChange(job._id, val)}
-                >
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Open">Open</SelectItem>
-                    <SelectItem value="Closed">Closed</SelectItem>
-                  </SelectContent>
-                </Select>
-              )}
-
-              <span
-                onClick={() => handleDelete(job._id)}
-                className="text-right border border-slate-700 px-10 cursor-pointer py-2 bg-[rgba(25,17,51,0.5)] rounded-sm"
-              >
-                Delete
-              </span>
-            </div>
+          {/* Job details */}
+          <div className="flex flex-wrap gap-4 border-b border-gray-200 py-4 mt-2 text-gray-600">
+            <span className="flex items-center gap-2 text-sm">
+              📍 {job.location}
+            </span>
+            <span className="flex items-center gap-2 text-sm">
+              💼 {job.jobType}
+            </span>
+            <span
+              className={`flex items-center gap-2 text-sm font-medium ${
+                job.status === "Open" ? "text-green-600" : "text-red-500"
+              }`}
+            >
+              {job.status}
+            </span>
           </div>
-        ))
-      )}
+
+          {/* Actions */}
+          <div className="flex justify-between items-center mt-4">
+        <select
+  defaultValue={job.status}
+  onChange={(e) => handleStatusChange(job._id, e.target.value)}
+  className="
+    appearance-none
+    w-40
+    px-4 py-2
+    text-sm font-medium
+    rounded-full
+    border border-gray-300
+    bg-black
+    shadow-sm
+    cursor-pointer
+    transition
+    hover:border-indigo-400
+    focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
+  "
+>
+  <option value="Open" className="text-green-600 font-semibold">
+    ✅ Open
+  </option>
+  <option value="Closed" className="text-red-500 font-semibold">
+    ❌ Closed
+  </option>
+</select>
+
+
+            <button
+              onClick={() => handleDelete(job._id)}
+              className="ml-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm shadow-md transition"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      ))}
     </div>
+  )}
+</div>
+
   );
 }
 
 export default ManageJobs;
-

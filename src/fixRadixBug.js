@@ -1,9 +1,14 @@
 // src/fixRadixBug.js
 if (typeof window !== "undefined") {
   const globalAny = window;
-  if (globalAny.safelyCallDestroy) {
-    const original = globalAny.safelyCallDestroy;
-    globalAny.safelyCallDestroy = (fn) => {
+  // Radix bundles safelyCallDestroy inside window when using Vite
+  const key = Object.keys(globalAny).find((k) =>
+    k.toLowerCase().includes("safelycalldestroy")
+  );
+
+  if (key && typeof globalAny[key] === "function") {
+    const original = globalAny[key];
+    globalAny[key] = (fn) => {
       try {
         if (typeof fn === "function") {
           return original(fn);

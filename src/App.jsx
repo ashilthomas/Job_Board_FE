@@ -1,3 +1,4 @@
+import "./fixRadixBug";
 import React, { useState, useMemo } from "react";
 import { RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "./Components/theame";
@@ -5,7 +6,7 @@ import { Toaster } from "./Components/ui/toaster";
 import LoginModal from "./Pages/LoginModal";
 import "./App.css"; // App-wide styles
 import appRouter from "./Routes";
-import "./fixRadixBug";
+
 
 
 function App() {
