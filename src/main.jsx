@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 
+import "./safelyCallDestroyFix";
 import App from "./App";
 import "./index.css"; // Only global styles
 import store from "./Redux/store";
