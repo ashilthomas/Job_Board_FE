@@ -1,3 +1,4 @@
+import "./fixRadixBug";
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
@@ -11,16 +12,18 @@ import ErrorBoundary from "./Components/ErrorBoundary/ErrorBoundary";
 window.addEventListener("error", (event) => {
   if (event.message?.includes("destroy is not a function")) {
     console.warn("Suppressed Radix destroy error:", event.message);
+    event.stopImmediatePropagation();
     event.preventDefault(); // prevent it from bubbling
   }
-});
+}, true);
 
 window.addEventListener("unhandledrejection", (event) => {
   if (event.reason?.message?.includes("destroy is not a function")) {
     console.warn("Suppressed Radix destroy promise error:", event.reason);
+    event.stopImmediatePropagation();
     event.preventDefault();
   }
-});
+}, true);
 
 const persistor = persistStore(store);
 
