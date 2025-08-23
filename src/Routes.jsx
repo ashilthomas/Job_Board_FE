@@ -16,6 +16,7 @@ const JobDetails = lazy(() => import("./Pages/JobDetails"));
 import Loader  from "./Components/Loader/Loader";
 // const ManageJobs = lazy(() => import("./Pages/ManageJobs"));
 import ManageJobs from "./Pages/ManageJobs";
+import RouterErrorBoundary from "./RouterErrorBoundary";
 
 // Protected route
 import ProtectedRoute from "./Utils/protectedRoutes/ProtectedRoute";
@@ -32,6 +33,7 @@ const appRouter = (openModal) =>
           <MainLayout openLogin={openModal} openSignup={openModal} />
         </React.Suspense>
       ),
+      errorElement: <RouterErrorBoundary />,
       children: [
         { path: "/", element: <LandingPage /> },
         { path: "*", element: <Navigate to="/" /> },
@@ -45,6 +47,7 @@ const appRouter = (openModal) =>
           </React.Suspense>
         </ProtectedRoute>
       ),
+      errorElement: <RouterErrorBoundary />,
       children: [
         { path: "/myjob", element: <MyJobs /> },
         { path: "/recommended", element: <RecommendedJobs /> },
@@ -63,6 +66,7 @@ const appRouter = (openModal) =>
           </React.Suspense>
         </ProtectedRoute>
       ),
+      errorElement: <RouterErrorBoundary />,
       children: [
         { path: "/employer/addjob", element: <PostJob /> },
         { path: "/employer/managejobs", element: <ManageJobs/> },
@@ -77,6 +81,7 @@ const appRouter = (openModal) =>
           </React.Suspense>
         </ProtectedRoute>
       ),
+      errorElement: <RouterErrorBoundary />,
       children: [
         { path: "/admin", element: <PostJob /> },
         { path: "/alljobs", element: <ManageJobs /> },
