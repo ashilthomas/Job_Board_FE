@@ -59,7 +59,7 @@ function PostJobVerify() {
     };
 
     return (
-        <div className='my-5'>
+        <div className='py-24'>
             <h2 className='text-3xl mb-5 text-center'>Create an Employer Account</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <FormInput

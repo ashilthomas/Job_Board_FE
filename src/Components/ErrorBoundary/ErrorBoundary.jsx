@@ -7,12 +7,19 @@ export default class ErrorBoundary extends Component {
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError() {
+  static getDerivedStateFromError(error) {
+    // ✅ Ignore Radix UI bug ("destroy is not a function")
+    if (error?.message?.includes("destroy is not a function")) {
+      return { hasError: false }; // don’t show fallback
+    }
     return { hasError: true };
   }
 
   componentDidCatch(error, info) {
-    console.error("ErrorBoundary caught:", error, info);
+    if (!error?.message?.includes("destroy is not a function")) {
+      console.error("ErrorBoundary caught:", error, info);
+    }
+    // else: silently ignore the Radix bug
   }
 
   render() {

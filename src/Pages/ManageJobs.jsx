@@ -39,7 +39,7 @@ function ManageJobs() {
   if (error) return <h2 className="text-red-500">Error loading jobs.</h2>;
 
   return (
-    <div className="p-5">
+    <div className="py-24">
       {data?.empJobs?.length === 0 ? (
         <h2 className="text-center text-gray-500 mt-10">No jobs found.</h2>
       ) : (
@@ -62,7 +62,7 @@ function ManageJobs() {
               {/* Render Select only when job exists */}
               {job && (
                 <Select
-                  defaultValue={job.status}
+                 value={job.status}
                   onValueChange={(val) => handleStatusChange(job._id, val)}
                 >
                   <SelectTrigger className="w-[180px]">

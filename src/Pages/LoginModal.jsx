@@ -86,8 +86,8 @@ function LoginModel({ closeModal, initialView = "login" }) {
   };
 
   return (
-    <div className="inset-0 absolute top-0 z-50 flex items-center justify-center bg-background bg-opacity-70">
-      <div className="bg-card rounded-lg shadow-md p-6 w-full max-w-md relative border">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center  bg-background bg-opacity-70">
+      <div className="bg-card rounded-lg shadow-md p-6 w-full max-w-md relative border  max-h-[90vh] overflow-y-auto">
         {/* Close Button */}
         <div className="border-b border-border mb-3">
           <button

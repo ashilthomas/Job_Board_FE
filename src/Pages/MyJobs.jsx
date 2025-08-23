@@ -10,7 +10,7 @@ function MyJobs() {
     if (error) return <p className="text-red-500">Error: {error}</p>; // Show error
 
     return (
-        <div className="mb-5 border-b pb-5">
+        <div className="mb-5 border-b py-24">
             <h2 className="text-center text-5xl my-5">Applied Jobs</h2>
 
             {data?.success ? (

@@ -67,7 +67,8 @@ function PostJob() {
     };
 
     return (
-        <div className="p-5">
+        <seciton className="pt-[100px]">
+        <div className="pt-[100px] pb-[100px]">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 <FormInput name="title" label="Job Title" register={register} errors={errors} />
                 <FormInput name="description" label="Job Description" register={register} errors={errors} type="textarea" />
@@ -147,6 +148,7 @@ function PostJob() {
                 </button>
             </form>
         </div>
+        </seciton>
     );
 }
 
