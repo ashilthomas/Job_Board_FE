@@ -174,7 +174,7 @@ function LandingPage() {
     <main className="relative">
       {/* Hero */}
 
-      <SmoothScrollSmoother>
+   
 
 
   <div className="flex flex-col items-center justify-center h-screen gap-10 px-4">
@@ -300,7 +300,7 @@ function LandingPage() {
           </div>
         </div>
       </section>
-            </SmoothScrollSmoother>
+          
     </main>
   );
 }

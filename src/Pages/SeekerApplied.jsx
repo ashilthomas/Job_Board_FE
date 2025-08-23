@@ -22,6 +22,9 @@ function SeekerApplied() {
   if (loading) return <Loader/>;
   if (error) return <h2 className="text-red-500">Error fetching data.</h2>;
 
+  console.log(data);
+  
+
   const handleStatusChange = async (applicantId, newStatus) => {
     try {
       await instance.put(`application/updateStatus/${applicantId}`, {
