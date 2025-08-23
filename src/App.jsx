@@ -5,7 +5,6 @@ import { Toaster } from "./Components/ui/toaster";
 import LoginModal from "./Pages/LoginModal";
 import "./App.css"; // App-wide styles
 import appRouter from "./Routes";
-import "./fixRadixBug";
 
 
 function App() {
