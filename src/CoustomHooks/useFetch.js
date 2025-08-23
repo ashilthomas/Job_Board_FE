@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import instance from "@/Utils/Axios"; // Custom Axios instance
 
 /**
@@ -14,13 +14,20 @@ const useFetch = (url, method = "GET", body = null, autoFetch = true) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(autoFetch);
   const [error, setError] = useState(null);
+  const controllerRef = useRef(null);
 
   const fetchData = useCallback(
     async (overrideBody = body) => {
-      setLoading(true);
-      setError(null);
+      // Cancel previous request if any
+      if (controllerRef.current) {
+        controllerRef.current.abort();
+      }
 
       const controller = new AbortController();
+      controllerRef.current = controller;
+
+      setLoading(true);
+      setError(null);
 
       try {
         const response = await instance.request({
@@ -31,24 +38,29 @@ const useFetch = (url, method = "GET", body = null, autoFetch = true) => {
         });
         setData(response.data ?? null);
       } catch (err) {
-        if (err.name !== "CanceledError") {
+        // Ignore cancellation
+        if (err.name !== "CanceledError" && err.name !== "AbortError") {
           setError(err.response?.data?.message || err.message || "Something went wrong!");
         }
       } finally {
         setLoading(false);
       }
-
-      return () => controller.abort();
     },
     [url, method, body]
   );
 
   // Auto-fetch for GET requests by default
   useEffect(() => {
-    if (autoFetch) {
-      const abortFn = fetchData();
-      return abortFn;
-    }
+    if (!autoFetch) return;
+
+    fetchData();
+
+    // Cleanup abort on unmount or deps change
+    return () => {
+      if (controllerRef.current) {
+        try { controllerRef.current.abort(); } catch {}
+      }
+    };
   }, [url, method, fetchData, autoFetch]);
 
   return { data, loading, error, fetchData };
