@@ -9,6 +9,18 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"), // ✅ Ensure alias is correct
     },
+    dedupe: [
+      "react",
+      "react-dom",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-navigation-menu",
+      "@radix-ui/react-select",
+      "@radix-ui/react-separator",
+      "@radix-ui/react-slot",
+      "@radix-ui/react-toast",
+      "@radix-ui/react-tooltip",
+    ],
   },
   base: "./", // ✅ Important for correct asset paths on Netlify
   build: {

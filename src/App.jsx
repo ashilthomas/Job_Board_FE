@@ -1,4 +1,3 @@
-import "./fixRadixBug";
 import React, { useState, useMemo } from "react";
 import { RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "./Components/theame";
@@ -6,7 +5,7 @@ import { Toaster } from "./Components/ui/toaster";
 import LoginModal from "./Pages/LoginModal";
 import "./App.css"; // App-wide styles
 import appRouter from "./Routes";
-
+import "./fixRadixBug";
 
 
 function App() {
@@ -15,8 +14,8 @@ function App() {
     view: "login",
   });
 
-  const openModal = (view = "login") => setModalState({ isOpen: true, view });
-  const closeModal = () => setModalState({ isOpen: false, view: "login" });
+  const openModal = useCallback((view = "login") => setModalState({ isOpen: true, view }), []);
+  const closeModal = useCallback(() => setModalState({ isOpen: false, view: "login" }), []);
 
   // Memoize router to prevent re-creating on every render
   const router = useMemo(() => appRouter(openModal), [openModal]);
