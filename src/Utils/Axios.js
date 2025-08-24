@@ -4,8 +4,8 @@ import { jwtDecode } from "jwt-decode";
 import store from "@/Redux/store";
 import { setLogOut } from "@/Redux/userData";
 
-// Base URL (change if needed)
-const BASE_URL = "https://job-board-be-21s5.onrender.com/api/v1" || "http://localhost:4000/api/v1/";
+//"http://localhost:4000/api/v1/"; ""https://job-board-be-21s5.onrender.com/api/v1"  
+const BASE_URL = "https://job-board-be-21s5.onrender.com/api/v1" ;
 
 const instance = axios.create({
   baseURL: BASE_URL,
