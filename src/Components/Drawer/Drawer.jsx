@@ -27,9 +27,10 @@ const schema = yup.object().shape({
     )
     .test("fileFormat", "Only PDF or DOCX allowed", (value) =>
       value && value[0]
-        ? ["application/pdf", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"].includes(
-            value[0].type
-          )
+        ? [
+            "application/pdf",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          ].includes(value[0].type)
         : false
     ),
 });
@@ -51,38 +52,50 @@ export function DrawerDemo({ id }) {
     formData.append("resume", data.resume[0]);
 
     try {
-      // ⚠️ Check your backend route — I’m assuming plural `/applications`
       const response = await instance.post(`/application/apply/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
       toast({
-        title: response.data.success ? "Application Submitted!" : "Application Failed",
+        title: "Application Submitted!",
         description:
-          response.data.message ||
-          (response.data.success
-            ? "Your job application was successful."
-            : "Something went wrong."),
-        variant: response.data.success ? "default" : "destructive",
+          response.data.message || "Your job application was successful.",
+        variant: "default",
       });
 
       if (response.data.success) reset({ resume: null });
     } catch (error) {
+      let message = "Something went wrong. Please try again.";
+
+      if (error.response) {
+        // 🔥 Use backend message when available
+        if (error.response.data?.message) {
+          message = error.response.data.message;
+        } else if (error.response.status === 400) {
+          message = "Invalid request.";
+        } else if (error.response.status === 404) {
+          message = "Job not found.";
+        } else if (error.response.status === 500) {
+          message = "Server error. Please try again later.";
+        }
+      } else if (error.message) {
+        message = error.message;
+      }
+
       toast({
-        title: "Error",
-        description:
-          error.response?.data?.message ||
-          "Network error: Failed to apply for the job.",
+        title: "Application Failed",
+        description: message,
         variant: "destructive",
       });
-      console.error("Upload error:", error);
+
+      console.error("Upload error:", error.response?.data || error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Drawer >
+    <Drawer>
       <DrawerTrigger asChild>
         <Button
           className="mt-6 bg-primary text-primary-foreground py-3 rounded-full px-10 hover:bg-purple-700"

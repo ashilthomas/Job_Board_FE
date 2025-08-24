@@ -8,6 +8,7 @@ import App from "./App";
 import "./index.css"; // Only global styles
 import store from "./Redux/store";
 import ErrorBoundary from "./Components/ErrorBoundary/ErrorBoundary";
+import { Toaster } from "./Components/ui/toaster";
 
 const persistor = persistStore(store);
 
@@ -18,6 +19,7 @@ createRoot(document.getElementById("root")).render(
       <PersistGate loading={null} persistor={persistor}>
         <ErrorBoundary>
               <App />
+                <Toaster />
         </ErrorBoundary>
 
       

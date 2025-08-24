@@ -8,7 +8,8 @@ function ViewResume({resumeUrl}) {
 
     return (
       <a
-      href={`https://job-board-be-21s5.onrender.com/uploads/${resumeUrl}`}
+   
+    href={`http://localhost:4000/uploads/${resumeUrl}`} 
         target="_blank"
         rel="noopener noreferrer"
         className="text-blue-500 hover:underline"
@@ -19,3 +20,7 @@ function ViewResume({resumeUrl}) {
 }
 
 export default ViewResume
+
+
+
+   // href={`https://job-board-be-21s5.onrender.com/uploads/${resumeUrl}`}

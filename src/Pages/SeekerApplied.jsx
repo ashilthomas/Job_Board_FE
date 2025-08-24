@@ -4,6 +4,7 @@ import useFetch from "@/CoustomHooks/useFetch";
 import instance from "@/Utils/Axios";
 import Loader from "@/Components/Loader/Loader";
 import { Section } from "lucide-react";
+import ViewResume from "@/Components/ViewResume/ViewResume";
 
 function SeekerApplied() {
   const { id } = useParams();
@@ -49,14 +50,15 @@ function SeekerApplied() {
                 </div>
                 <div>
                   {applicant.resume && (
-                    <a
-                      href={`http://localhost:4000/uploads/${applicant.resume}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-500 underline"
-                    >
-                      View Resume
-                    </a>
+                    // <a
+                    //   href={`http://localhost:4000/uploads/${applicant.resume}`}
+                    //   target="_blank"
+                    //   rel="noopener noreferrer"
+                    //   className="text-blue-500 underline"
+                    // >
+                    //   View Resume
+                    // </a>
+                    <ViewResume resumeUrl={applicant.resume} />
                   )}
                   <div className="mt-3">
                   <select

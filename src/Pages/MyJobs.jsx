@@ -1,5 +1,4 @@
 import Loader from '@/Components/Loader/Loader';
-import ViewResume from '@/Components/ViewResume/ViewResume';
 import useFetch from '@/CoustomHooks/useFetch';
 import React from 'react'
 

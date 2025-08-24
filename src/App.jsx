@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback } from "react";
 import { RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "./Components/theame";
-import { Toaster } from "./Components/ui/toaster";
+
 import LoginModal from "./Pages/LoginModal";
 import "./App.css"; // App-wide styles
 import appRouter from "./Routes";
@@ -25,7 +25,7 @@ function App() {
       {modalState.isOpen && (
         <LoginModal closeModal={closeModal} initialView={modalState.view} />
       )}
-      <Toaster />
+   
 
       <RouterProvider router={router} />
     </ThemeProvider>
