@@ -1,25 +1,24 @@
-// src/fixRadixBug.js
-if (typeof window !== "undefined") {
-  const globalAny = window;
-  // Radix bundles safelyCallDestroy inside window when using Vite
-  const key = Object.keys(globalAny).find((k) =>
-    k.toLowerCase().includes("safelycalldestroy")
-  );
-
-  if (key && typeof globalAny[key] === "function") {
-    const original = globalAny[key];
-    globalAny[key] = (fn) => {
-      try {
-        if (typeof fn === "function") {
-          return original(fn);
-        }
-      } catch (err) {
-        if (err?.message?.includes("destroy is not a function")) {
-          console.warn("Suppressed Radix destroy bug");
-          return;
-        }
-        throw err;
-      }
-    };
+// src/radixPatch.js
+const safeDestroy = (fn) => {
+  try {
+    if (typeof fn === "function") {
+      fn();
+    }
+  } catch (e) {
+    if (e?.message?.includes("destroy is not a function")) {
+      // swallow Radix bug
+      console.warn("Radix UI safeDestroy ignored:", e.message);
+      return;
+    }
+    throw e; // rethrow real errors
   }
-}
+};
+
+// Patch the global Object prototype Radix uses internally
+// Radix calls cleanup functions stored in arrays
+const originalSplice = Array.prototype.splice;
+Array.prototype.splice = function (...args) {
+  const removed = originalSplice.apply(this, args);
+  removed.forEach((fn) => safeDestroy(fn));
+  return removed;
+};

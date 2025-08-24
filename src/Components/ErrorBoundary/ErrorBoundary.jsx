@@ -8,18 +8,20 @@ export default class ErrorBoundary extends Component {
   }
 
   static getDerivedStateFromError(error) {
-    // ✅ Ignore Radix UI bug ("destroy is not a function")
+    // Ignore Radix UI "destroy is not a function" error
     if (error?.message?.includes("destroy is not a function")) {
-      return { hasError: false }; // don’t show fallback
+      return null; // don't trigger fallback
     }
     return { hasError: true };
   }
 
   componentDidCatch(error, info) {
-    if (!error?.message?.includes("destroy is not a function")) {
+    if (error?.message?.includes("destroy is not a function")) {
+      // just ignore silently (or log once if you want)
+      console.warn("Ignored Radix UI error:", error.message);
+    } else {
       console.error("ErrorBoundary caught:", error, info);
     }
-    // else: silently ignore the Radix bug
   }
 
   render() {

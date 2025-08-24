@@ -1,19 +1,15 @@
-// src/Redux/store.js
 import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-import userData from "./userData";
+import storage from "redux-persist/lib/storage"; 
+import userReducer from "../Redux/userData"
 
-// Persist config
 const persistConfig = {
-  key: "user", // persisted key in localStorage
+  key: "user",
   storage,
 };
 
-// Wrap reducer with persist
-const persistedUserReducer = persistReducer(persistConfig, userData);
+const persistedUserReducer = persistReducer(persistConfig, userReducer);
 
-// Configure store
 const store = configureStore({
   reducer: {
     user: persistedUserReducer,
@@ -21,14 +17,11 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        // Ignore redux-persist actions
         ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
       },
     }),
-  devTools: process.env.NODE_ENV !== "production", // enable devTools only in dev
+  devTools: process.env.NODE_ENV !== "production",
 });
 
-// Persistor for rehydration
 export const persistor = persistStore(store);
-
 export default store;

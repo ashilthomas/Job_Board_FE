@@ -2,13 +2,6 @@ import React from "react";
 import useFetch from "@/CoustomHooks/useFetch";
 import { useSelector } from "react-redux";
 import instance from "@/Utils/Axios";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/Components/ui/select";
 import { Link } from "react-router-dom";
 import Loader from "@/Components/Loader/Loader";
 
@@ -46,14 +39,14 @@ function ManageJobs() {
   if (error) return <h2 className="text-red-500">Error loading jobs.</h2>;
 
   return (
-  <div className="py-16 px-6 bg-gray-50 min-h-screen">
+  <div className="py-24 px-6  min-h-screen">
   {data?.jobs?.length === 0 ? (
     <h2 className="text-center text-gray-500 mt-10 text-lg">
       No jobs found.
     </h2>
   ) : (
     <div className="grid gap-6">
-      {data.jobs.map((job) => (
+      {data.Jobs?.map((job) => (
         <div
           key={job._id}
           className="bg-white rounded-xl shadow-md hover:shadow-lg transition p-6 border border-gray-200"

@@ -1,17 +1,9 @@
-
 import React from "react";
 import { useParams } from "react-router-dom";
- // Import Axios instance
-import {  Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue, } from "@/Components/ui/select";
 import useFetch from "@/CoustomHooks/useFetch";
 import instance from "@/Utils/Axios";
 import Loader from "@/Components/Loader/Loader";
-
+import { Section } from "lucide-react";
 
 function SeekerApplied() {
   const { id } = useParams();
@@ -19,31 +11,32 @@ function SeekerApplied() {
     `application/getApplicationForEmployer/${id}`
   );
 
-  if (loading) return <Loader/>;
-  if (error) return <h2 className="text-red-500">Error fetching data.</h2>;
-
   console.log(data);
   
+
+  if (loading) return <Loader />;
+  if (error) return <h2 className="text-red-500">Error fetching data.</h2>;
 
   const handleStatusChange = async (applicantId, newStatus) => {
     try {
       await instance.put(`application/updateStatus/${applicantId}`, {
         status: newStatus,
       });
-
-      fetchData(); // Refresh data after update
+      fetchData();
     } catch (error) {
       console.error("Error updating status:", error);
     }
   };
 
   return (
-    <div className="w-[750px]  m-auto border mt-5 px-10 py-5 rounded-lg">
+  <section className="mb-5 border-b py-24">
+    <div className="w-[750px] py-10 m-auto border mt-5 px-10  rounded-lg">
       {data && (
         <>
           <div className="border-b pb-5">
             <h2 className="text-xl font-semibold">{data.job.title}</h2>
           </div>
+
           {data.applicants.length > 0 ? (
             data.applicants.map((applicant, index) => (
               <div
@@ -66,25 +59,23 @@ function SeekerApplied() {
                     </a>
                   )}
                   <div className="mt-3">
+                  <select
+  value={applicant.status}
+  onChange={(e) => handleStatusChange(applicant.id, e.target.value)}
+  className={`
+    border rounded px-2 py-1 w-[180px] 
+    ${applicant.status === "pending" ? "bg-yellow-100 text-yellow-700" : ""}
+    ${applicant.status === "reviewed" ? "bg-blue-100 text-blue-700" : ""}
+    ${applicant.status === "accepted" ? "bg-green-100 text-green-700" : ""}
+    ${applicant.status === "rejected" ? "bg-red-100 text-red-700" : ""}
+  `}
+>
+  <option value="pending">Pending</option>
+  <option value="reviewed">Reviewed</option>
+  <option value="accepted">Accepted</option>
+  <option value="rejected">Rejected</option>
+</select>
 
-              
-                  <Select
-                    onValueChange={(value) =>
-                      handleStatusChange(applicant.id, value)
-                    }
-                  >
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder={applicant.status} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="pending">Pending</SelectItem>
-                        <SelectItem value="reviewed">Reviewed</SelectItem>
-                        <SelectItem value="accepted">Accepted</SelectItem>
-                        <SelectItem value="rejected">Rejected</SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
                   </div>
                 </div>
               </div>
@@ -94,8 +85,9 @@ function SeekerApplied() {
           )}
         </>
       )}
-    </div>
+    </div></section>
   );
 }
 
 export default SeekerApplied;
+
