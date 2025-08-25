@@ -207,7 +207,7 @@ function LandingPage() {
             variant="purple"
             className="bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-700"
           >
-            Search Jobs
+                 <Link to="/jobs">Search Jobs</Link>
           </Button>
         </form>
       </div>
