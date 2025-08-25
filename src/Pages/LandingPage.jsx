@@ -4,7 +4,7 @@ import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button";
 import LogoCrsl from "@/Components/LogoCrsl/LogoCrsl";
 import SmoothScrollSmoother from "../Components/SmoothScrollSmoother/SmoothScrollSmoother";
-
+import { Link } from "react-router-dom";
 
 function LandingPage() {
   const jobCategories = [
@@ -174,47 +174,43 @@ function LandingPage() {
     <main className="relative">
       {/* Hero */}
 
-   
+      <div className="flex flex-col items-center justify-center h-screen gap-10 px-4">
+        {/* Header */}
+        <div className="text-center">
+          <h2 className="text-7xl font-bold mb-5">
+            Get The <span className="text-purple-600">Right Job</span>
+          </h2>
+          <h2 className="text-7xl font-bold mb-5">You Deserve</h2>
+          <h6 className="text-lg font-normal mb-5">
+            1,80,570 jobs listed here! Your dream job is waiting.
+          </h6>
+        </div>
 
-
-  <div className="flex flex-col items-center justify-center h-screen gap-10 px-4">
-  {/* Header */}
-  <div className="text-center">
-    <h2 className="text-7xl font-bold mb-5">
-      Get The <span className="text-purple-600">Right Job</span>
-    </h2>
-    <h2 className="text-7xl font-bold mb-5">You Deserve</h2>
-    <h6 className="text-lg font-normal mb-5">
-      1,80,570 jobs listed here! Your dream job is waiting.
-    </h6>
-  </div>
-
-  {/* Search Form */}
-  <form className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-y-3 md:gap-y-0 bg-black p-3 md:p-5 rounded-md md:rounded-full md:w-7/12 w-full drop-shadow-2xl border border-purple-500">
-    <Input
-      placeholder="Keywords (e.g., Developer, Designer)"
-      aria-label="Search keywords"
-      className="w-full"
-    />
-    <Input
-      placeholder="Location (e.g., New York)"
-      aria-label="Search location"
-      className="w-full md:border-l border-slate-400"
-    />
-    <Input
-      placeholder="Categories (e.g., IT, Marketing)"
-      aria-label="Search categories"
-      className="w-full md:border-l border-slate-400"
-    />
-    <Button
-      variant="purple"
-      className="bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-700"
-    >
-      Search Jobs
-    </Button>
-  </form>
-</div>
-
+        {/* Search Form */}
+        <form className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 sm:gap-y-3 md:gap-y-0 bg-black p-3 md:p-5 rounded-md md:rounded-full md:w-7/12 w-full drop-shadow-2xl border border-purple-500">
+          <Input
+            placeholder="Keywords (e.g., Developer, Designer)"
+            aria-label="Search keywords"
+            className="w-full"
+          />
+          <Input
+            placeholder="Location (e.g., New York)"
+            aria-label="Search location"
+            className="w-full md:border-l border-slate-400"
+          />
+          <Input
+            placeholder="Categories (e.g., IT, Marketing)"
+            aria-label="Search categories"
+            className="w-full md:border-l border-slate-400"
+          />
+          <Button
+            variant="purple"
+            className="bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-700"
+          >
+            Search Jobs
+          </Button>
+        </form>
+      </div>
 
       {/* About */}
       <section className="about-section">
@@ -290,17 +286,17 @@ function LandingPage() {
                   className="input-placeholder w-full border mb-2 md:mb-0 md:border-none rounded-full"
                 />
                 <Button
+                  asChild
                   variant="purple"
-                  className="bg-purple-600 text-white px-4  rounded-full py-2 hover:bg-purple-700"
+                  className="bg-purple-600 text-white px-4 rounded-full py-2 hover:bg-purple-700"
                 >
-                  Search Jobs
+                  <Link to="/jobs">Search Jobs</Link>
                 </Button>
               </form>
             </div>
           </div>
         </div>
       </section>
-          
     </main>
   );
 }
